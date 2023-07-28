@@ -1,0 +1,18 @@
+Approach:
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        if(numRows==0)return {};
+        vector<vector<int>>res(numRows);
+        vector<int> rows;
+        for(int i = 0; i<res.size(); i++){
+            rows.resize(i+1);
+            rows[0] = 1;
+            rows[i] = 1;
+            res[i]=rows;
+            for(int j = 1; j<i; j++){
+                res[i][j] = res[i-1][j]+res[i-1][j-1];
+            }
+        }return res;
+    }
+};
