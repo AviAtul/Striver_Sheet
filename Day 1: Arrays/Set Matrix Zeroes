@@ -1,0 +1,63 @@
+Approach 1:
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<vector<int>> dummy = matrix;
+        for(int i = 0; i<m; i++){
+            for(int j = 0; j<n; j++){
+                if(dummy[i][j]==0){
+                    for(int r = 0; r<m; r++){
+                        matrix[r][j] = 0;
+                    }for(int c = 0; c<n; c++){
+                        matrix[i][c] = 0;
+                    }
+                }
+            }
+        }
+    }
+};
+
+Approach 2:
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        bool checkRow = false;
+        bool checkCol = false;
+        for(int i = 0; i<m; i++){
+            if(matrix[i][0]==0){
+                checkRow = true;
+                break;
+            }
+        }for(int i = 0; i<n; i++){
+            if(matrix[0][i]==0){
+                checkCol = true;
+                break;
+            }
+        }for(int i = 1; i<m; i++){
+            for(int j = 1; j<n; j++){
+                if(matrix[i][j]==0){
+                    matrix[0][j]= 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }for(int i = 1; i<m; i++){
+            for(int j = 1; j<n; j++){      
+                if(matrix[0][j]==0 || matrix[i][0]==0){
+                    matrix[i][j] = 0;
+                }
+            }
+        }if(checkRow){
+            for(int i = 0; i<m; i++){
+                matrix[i][0] = 0;
+            }
+        }if(checkCol){
+            for(int i = 0; i<n; i++){
+                matrix[0][i] = 0;
+            }
+        }
+    }
+};
