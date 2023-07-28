@@ -1,0 +1,32 @@
+Approach 1:
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        next_permutation(nums.begin(), nums.end());
+    }
+};
+
+Approach 2:
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        if(nums.size()==0 || nums.size()==1)return;
+        int break_point = -1;
+        int second_break = -1;
+        for(int i = nums.size()-2; i>=0; i--){
+            if(nums[i]<nums[i+1]){
+                break_point = i;
+                break;
+            }
+        }if(break_point == -1){
+            reverse(nums.begin(), nums.end());
+            return;
+        }for(int i = nums.size()-1; i>=0; i--){
+            if(nums[i]>nums[break_point]){
+                second_break = i;
+                break;
+            }
+        }swap(nums[break_point], nums[second_break]);
+        reverse(nums.begin()+break_point+1, nums.end());
+    }
+};
