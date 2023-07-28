@@ -1,0 +1,56 @@
+Approach 1:
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        set<vector<int>>st;
+        for(int i = 0; i<n; i++){
+            for(int j = i+1; j<n; j++){
+                unordered_map<long long, long long> mp;
+                for(int k = j+1; k<n; k++){
+                    long long curr_sum = nums[i]+nums[j];
+                    curr_sum = curr_sum+nums[k];
+                    long long rem = target-curr_sum;
+                    if(mp.find(rem)!=mp.end()){
+                        vector<int> temp = {nums[i], nums[j], nums[k], (int)rem};
+                        sort(temp.begin(), temp.end());
+                        st.insert(temp);
+                    }mp[nums[k]]++;
+                }
+            }
+        }return vector<vector<int>>(st.begin(), st.end());
+    }
+};
+
+Approach 2:
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        vector<vector<int>> ans;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i<n; i++){
+            if (i != 0 && nums[i] == nums[i - 1]) continue;
+            for(int j = i+1; j<n; j++){
+                if (j != i + 1 && nums[j] == nums[j - 1]) continue;
+                int left = j+1;
+                int right = n-1;
+                while (left < right) {
+                    long long sum = nums[i] + nums[j];
+                    long long curr_sum = nums[left] + nums[right];
+                    if (sum + curr_sum == (long long)target) {
+                        ans.push_back({nums[i], nums[j], nums[left], nums[right]});
+                        while (left < right && nums[left] == nums[left + 1]) left++;
+                        while (left < right && nums[right] == nums[right - 1]) right--;
+                        left++;
+                        right--;
+                    } else if (sum + curr_sum < (long long)target) {
+                        left++;
+                    } else {
+                        right--;
+                    }
+                }
+            }
+        }return ans;
+    }
+};
