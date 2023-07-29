@@ -1,0 +1,48 @@
+Approach 1:
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(headA==NULL || headB==NULL)return NULL;
+        unordered_map<ListNode*,int>mp;
+        while(headA){
+            mp[headA]++;
+            headA=headA->next;
+        }while(headB){
+            if(mp[headB]!=0)return headB;
+            headB=headB->next;
+        }return NULL;
+    }
+};
+
+Approach 2:
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        int l1 = 0;
+        int l2 = 0;
+        ListNode* dummy1 = headA;
+        ListNode* dummy2 = headB;
+        while(dummy1!=NULL){
+            dummy1 = dummy1->next;
+            l1++;
+        }while(dummy2!=NULL){
+            dummy2 = dummy2->next;
+            l2++;
+        }dummy1 = headA;
+        dummy2 = headB;
+        if(l2>l1){
+            for(int i = 0; i<l2-l1; i++){
+                dummy2 = dummy2->next;
+            }
+        }else{
+            for(int i = 0; i<l1-l2; i++){
+                dummy1 = dummy1->next;
+            }
+        }while(dummy1!=NULL && dummy2!=NULL){
+            if(dummy1==dummy2)return dummy1;
+            dummy1 = dummy1->next;
+            dummy2 = dummy2->next;
+        }return NULL;
+    }
+};
